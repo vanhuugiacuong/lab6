@@ -1,26 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>Shop Quần Áo</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Products</h1>
+    <h1>Danh sách sản phẩm</h1>
     <ul>
         <% products.forEach(product => { %>
             <li>
+                <img src="<%= product.image %>" alt="<%= product.name %>" width="100">
                 <h3><%= product.name %></h3>
-                <p>Price: $<%= product.price %></p>
-                <a href="/product/<%= product.id %>">View</a>
-                <form action="/add-to-cart" method="POST" style="display:inline;">
-                    <input type="hidden" name="productId" value="<%= product.id %>">
-                    <button type="submit">Add to Cart</button>
+                <p>Giá: $<%= product.price %></p>
+                <p>Loại: <%= product.category %></p>
+                <a href="/product/<%= product._id %>">Xem chi tiết</a>
+                <form action="/delete-product/<%= product._id %>" method="POST">
+                    <button type="submit">Xóa</button>
                 </form>
             </li>
         <% }) %>
     </ul>
-    <a href="/cart">Go to Cart</a>
+
+    <h2>Thêm sản phẩm mới</h2>
+    <form action="/add-product" method="POST">
+        <input type="text" name="name" placeholder="Tên sản phẩm" required>
+        <input type="number" name="price" placeholder="Giá" required>
+        <input type="text" name="category" placeholder="Loại (Áo, Quần, Giày...)" required>
+        <input type="text" name="image" placeholder="Link ảnh" required>
+        <button type="submit">Thêm sản phẩm</button>
+    </form>
+
+    <br>
+    <a href="/cart">🛒 Xem giỏ hàng</a>
 </body>
 </html>

@@ -1,16 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Shopping Cart</title>
+    <title>Giỏ hàng</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        img {
+            width: 60px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .cart-total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .checkout-btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .checkout-btn:hover {
+            background: #0056b3;
+        }
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .remove-btn:hover {
+            background: #c82333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Shopping Cart</h1>
-    <ul>
-        <% cart.forEach(item => { %>
-            <li><%= item.name %> - $<%= item.price %></li>
-        <% }) %>
-    </ul>
-    <a href="/">Back to Products</a>
+    <div class="container">
+        <h1>🛒 Giỏ hàng</h1>
+        <ul>
+            <% cart.forEach((item, index) => { %>
+                <li>
+                    <img src="<%= item.image %>" alt="<%= item.name %>">
+                    <div class="product-info">
+                        <h3><%= item.name %></h3>
+                        <p>Giá: $<%= item.price %></p>
+                    </div>
+                    <form action="/remove-from-cart" method="POST">
+                        <input type="hidden" name="index" value="<%= index %>">
+                        <button type="submit" class="remove-btn">Xóa</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+        <p class="cart-total">Tổng tiền: $<%= cart.reduce((total, item) => total + item.price, 0) %></p>
+        <a href="/" class="checkout-btn">🛍 Tiếp tục mua hàng</a>
+    </div>
 </body>
 </html>
